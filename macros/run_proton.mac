@@ -1,0 +1,36 @@
+# run_proton.mac - Proton beam simulation for 5CB Liquid Crystal Detector
+#
+# This macro configures and runs a proton beam through the detector
+# with multiple energies to study detector response
+
+# Initialize run
+/run/initialize
+
+# Set verbose levels
+/control/verbose 1
+/run/verbose 1
+/event/verbose 0
+/tracking/verbose 0
+
+# Configure detector
+/LC/detector/bias 300 volt
+
+# Configure beam - proton with 500 MeV
+/LC/beam/particle proton
+/LC/beam/energy 500 MeV
+/LC/beam/glassFilter false
+
+# Run 1000 events
+/run/beamOn 1000
+
+# Increase energy to 1 GeV 
+/LC/beam/energy 1 GeV
+/run/beamOn 1000
+
+# Try with glass filter and lower energy
+/LC/beam/energy 100 MeV
+/LC/beam/glassFilter true
+/run/beamOn 1000
+
+# Print summary
+/run/printProgress 100

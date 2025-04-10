@@ -1,0 +1,56 @@
+# neutron_simulation.mac - Neutron interaction study for 5CB Liquid Crystal Detector
+#
+# This macro runs neutron simulations to study their interaction with the detector
+
+# Initialize run
+/run/initialize
+
+# Set verbose levels
+/control/verbose 1
+/run/verbose 1
+/event/verbose 0
+/tracking/verbose 0
+
+# Configure detector
+/LC/detector/bias 300 volt
+/LC/beam/glassFilter false
+
+# Configure beam - neutrons
+/LC/beam/particle neutron
+
+# Thermal neutrons (0.025 eV)
+/LC/beam/energy 0.025 eV
+/control/shell echo "Running thermal neutron simulation (0.025 eV)"
+/run/beamOn 5000
+
+# Epithermal neutrons (1 eV)
+/LC/beam/energy 1 eV
+/control/shell echo "Running epithermal neutron simulation (1 eV)"
+/run/beamOn 5000
+
+# Fast neutrons - fission spectrum (1 MeV) 
+/LC/beam/energy 1 MeV
+/control/shell echo "Running fast neutron simulation (1 MeV)"
+/run/beamOn 5000
+
+# Fast neutrons - higher energy (5 MeV)
+/LC/beam/energy 5 MeV
+/control/shell echo "Running fast neutron simulation (5 MeV)"
+/run/beamOn 5000
+
+# Very fast neutrons (14 MeV) - typical of D-T fusion
+/LC/beam/energy 14 MeV
+/control/shell echo "Running very fast neutron simulation (14 MeV)"
+/run/beamOn 5000
+
+# Enable more detailed tracking for a few events to see secondary particles
+/tracking/verbose 1
+/LC/beam/energy 14 MeV
+/control/shell echo "Running detailed neutron interaction study"
+/run/beamOn 10
+
+# Return to normal tracking
+/tracking/verbose 0
+
+# Print summary
+/run/printProgress 1000

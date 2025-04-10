@@ -1,0 +1,91 @@
+# background_radiation.mac - Background radiation simulation
+#
+# This macro simulates typical environmental background radiation
+# to understand the detector's response to ambient sources
+
+# Initialize run
+/run/initialize
+
+# Set verbose levels
+/control/verbose 1
+/run/verbose 1
+/event/verbose 0
+/tracking/verbose 0
+
+# Configure detector
+/LC/detector/bias 300 volt
+/LC/beam/glassFilter false
+
+# ======== Cosmic Ray Muons ========
+/LC/beam/particle mu-
+/LC/beam/energy 4 GeV
+# Run cosmic muons (negative)
+/control/shell echo "Running cosmic ray muons (mu-) at 4 GeV"
+/run/beamOn 5000
+
+# ======== Potassium-40 ========
+# K-40 decay: beta decay (89%) and electron capture (11%)
+# Beta endpoint: 1.31 MeV
+/LC/beam/particle e-
+/LC/beam/energy 1.31 MeV
+/control/shell echo "Running K-40 beta radiation (1.31 MeV)"
+/run/beamOn 5000
+
+# Gamma from K-40: 1.46 MeV
+/LC/beam/particle gamma
+/LC/beam/energy 1.46 MeV
+/control/shell echo "Running K-40 gamma radiation (1.46 MeV)"
+/run/beamOn 5000
+
+# ======== Radon Progeny ========
+# Pb-214 gamma: 352 keV
+/LC/beam/particle gamma
+/LC/beam/energy 0.352 MeV
+/control/shell echo "Running Pb-214 gamma radiation (352 keV)"
+/run/beamOn 5000
+
+# Bi-214 gamma: 609 keV
+/LC/beam/particle gamma
+/LC/beam/energy 0.609 MeV
+/control/shell echo "Running Bi-214 gamma radiation (609 keV)"
+/run/beamOn 5000
+
+# Pb-214 beta: 1.02 MeV endpoint
+/LC/beam/particle e-
+/LC/beam/energy 1.02 MeV
+/control/shell echo "Running Pb-214 beta radiation (1.02 MeV)"
+/run/beamOn 5000
+
+# Bi-214 beta: 3.27 MeV endpoint
+/LC/beam/particle e-
+/LC/beam/energy 3.27 MeV
+/control/shell echo "Running Bi-214 beta radiation (3.27 MeV)"
+/run/beamOn 5000
+
+# ======== Thorium Series ========
+# Tl-208 gamma: 2.61 MeV
+/LC/beam/particle gamma
+/LC/beam/energy 2.61 MeV
+/control/shell echo "Running Tl-208 gamma radiation (2.61 MeV)"
+/run/beamOn 5000
+
+# ======== Mixed background (simplified version) ========
+# This would be better implemented with a proper GPS source,
+# but as approximation we'll run a mix of particles
+/control/shell echo "Running mixed background radiation sample"
+
+# Run some low-energy gammas (typical building materials)
+/LC/beam/particle gamma
+/LC/beam/energy 0.3 MeV
+/run/beamOn 1000
+
+/LC/beam/energy 1.5 MeV
+/run/beamOn 1000
+
+# Run some cosmic background
+/LC/beam/particle mu-
+/LC/beam/energy 2 GeV
+/run/beamOn 1000
+
+# Print summary
+/run/printProgress 1000

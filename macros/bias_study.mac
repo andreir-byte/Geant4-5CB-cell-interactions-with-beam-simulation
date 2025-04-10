@@ -1,0 +1,58 @@
+# bias_study.mac - Investigation of bias voltage effects on signal
+#
+# This macro systematically varies the detector bias voltage
+# to study charge collection efficiency and current signals
+
+# Disable visualization for performance
+/vis/disable
+/control/verbose 0
+/run/verbose 1
+/event/verbose 0
+/tracking/verbose 0
+
+# Configure beam - fixed for this study
+/LC/beam/particle proton
+/LC/beam/energy 100 MeV
+/LC/beam/glassFilter false
+
+# Initialize
+/run/initialize
+
+# === Bias Voltage Sweep ===
+
+# Very low bias (10-50V) - poor charge collection expected
+/LC/detector/bias 10 volt
+/run/beamOn 1000
+
+/LC/detector/bias 20 volt
+/run/beamOn 1000
+
+/LC/detector/bias 50 volt
+/run/beamOn 1000
+
+# Standard operating range (100-500V)
+/LC/detector/bias 100 volt
+/run/beamOn 1000
+
+/LC/detector/bias 200 volt
+/run/beamOn 1000
+
+/LC/detector/bias 300 volt
+/run/beamOn 1000
+
+/LC/detector/bias 400 volt
+/run/beamOn 1000
+
+/LC/detector/bias 500 volt
+/run/beamOn 1000
+
+# High bias region (saturation expected)
+/LC/detector/bias 750 volt
+/run/beamOn 1000
+
+/LC/detector/bias 1000 volt
+/run/beamOn 1000
+
+# Print completion message
+/control/shell echo "Bias voltage study complete."
+/control/shell echo "Files generated: LC_proton_100MeV_*.root"

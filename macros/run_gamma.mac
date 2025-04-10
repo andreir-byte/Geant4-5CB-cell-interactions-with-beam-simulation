@@ -1,0 +1,48 @@
+# run_gamma.mac - Gamma beam simulation for 5CB Liquid Crystal Detector
+#
+# This macro configures and runs gamma rays at energies corresponding
+# to common radioactive sources (Co-60, Cs-137, etc.)
+
+# Initialize run
+/run/initialize
+
+# Set verbose levels
+/control/verbose 1
+/run/verbose 1
+/event/verbose 0
+/tracking/verbose 0
+
+# Configure detector
+/LC/detector/bias 500 volt
+
+# Configure beam - gamma rays
+/LC/beam/particle gamma
+/LC/beam/glassFilter false
+
+# Run with different gamma energies typical of standard sources
+
+# Cs-137 (662 keV)
+/LC/beam/energy 0.662 MeV
+/run/beamOn 10000
+
+# Co-60 (1.17 MeV)
+/LC/beam/energy 1.17 MeV  
+/run/beamOn 10000
+
+# Co-60 (1.33 MeV)
+/LC/beam/energy 1.33 MeV
+/run/beamOn 10000
+
+# Na-22 (511 keV - annihilation)
+/LC/beam/energy 0.511 MeV
+/run/beamOn 10000
+
+# Higher energy gammas
+/LC/beam/energy 5 MeV
+/run/beamOn 10000
+
+/LC/beam/energy 10 MeV
+/run/beamOn 10000
+
+# Print summary
+/run/printProgress 1000

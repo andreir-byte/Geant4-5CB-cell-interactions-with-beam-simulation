@@ -1,0 +1,37 @@
+# run_electron.mac - Electron beam simulation for 5CB Liquid Crystal Detector
+#
+# This macro configures and runs an electron beam through the detector
+# at various energies typical for beta sources
+
+# Initialize run
+/run/initialize
+
+# Set verbose levels
+/control/verbose 1
+/run/verbose 1
+/event/verbose 0
+/tracking/verbose 0
+
+# Configure detector - higher bias for better electron collection
+/LC/detector/bias 500 volt
+
+# Configure beam - electron with 10 MeV (typical beta energy)
+/LC/beam/particle e-
+/LC/beam/energy 10 MeV
+/LC/beam/glassFilter false
+
+# Run 5000 events (more events needed for lighter particles)
+/run/beamOn 5000
+
+# Try different energies relevant for electron studies
+/LC/beam/energy 1 MeV
+/run/beamOn 5000
+
+/LC/beam/energy 5 MeV
+/run/beamOn 5000
+
+/LC/beam/energy 20 MeV
+/run/beamOn 5000
+
+# Print summary
+/run/printProgress 100

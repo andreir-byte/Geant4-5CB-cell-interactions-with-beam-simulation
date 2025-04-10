@@ -1,0 +1,55 @@
+# alpha_particles.mac - Alpha particle simulation for 5CB Liquid Crystal Detector
+#
+# This macro configures and runs alpha particles (He nuclei) through the detector
+# at various energies typical for alpha emitters
+
+# Initialize run
+/run/initialize
+
+# Set verbose levels
+/control/verbose 1
+/run/verbose 1
+/event/verbose 0
+/tracking/verbose 0
+
+# Configure detector - standard bias
+/LC/detector/bias 300 volt
+
+# Configure beam - alpha particles (He nuclei)
+/LC/beam/particle alpha
+/LC/beam/glassFilter false
+
+# Common alpha energies from radioactive sources
+# Americium-241: 5.5 MeV
+/LC/beam/energy 5.5 MeV
+/control/shell echo "Running Am-241 alpha simulation (5.5 MeV)"
+/run/beamOn 2000
+
+# Plutonium-239: 5.2 MeV
+/LC/beam/energy 5.2 MeV
+/control/shell echo "Running Pu-239 alpha simulation (5.2 MeV)"
+/run/beamOn 2000
+
+# Uranium-238: 4.2 MeV
+/LC/beam/energy 4.2 MeV
+/control/shell echo "Running U-238 alpha simulation (4.2 MeV)"
+/run/beamOn 2000
+
+# Radon-222: 5.5 MeV
+/LC/beam/energy 5.5 MeV
+/control/shell echo "Running Rn-222 alpha simulation (5.5 MeV)"
+/run/beamOn 2000
+
+# Higher energy alpha
+/LC/beam/energy 10 MeV
+/control/shell echo "Running high-energy alpha simulation (10 MeV)"
+/run/beamOn 2000
+
+# Now with glass filter to demonstrate strong attenuation
+/LC/beam/glassFilter true
+/LC/beam/energy 5.5 MeV
+/control/shell echo "Running Am-241 alpha WITH glass filter (5.5 MeV)"
+/run/beamOn 2000
+
+# Print summary
+/run/printProgress 500

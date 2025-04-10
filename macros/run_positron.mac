@@ -1,0 +1,41 @@
+# run_positron.mac - Positron beam simulation for 5CB Liquid Crystal Detector
+#
+# This macro configures and runs a positron beam through the detector
+# with focus on annihilation detection
+
+# Initialize run
+/run/initialize
+
+# Set verbose levels
+/control/verbose 1
+/run/verbose 1
+/event/verbose 0
+/tracking/verbose 0
+
+# Configure detector
+/LC/detector/bias 300 volt
+
+# Configure beam - positron with various energies
+/LC/beam/particle e+
+/LC/beam/energy 5 MeV
+/LC/beam/glassFilter false
+
+# Run simulation
+/run/beamOn 5000
+
+# Study annihilation events with more detail - enable verbose tracking
+/tracking/verbose 1
+/LC/beam/energy 0.5 MeV
+/run/beamOn 100
+
+# Reset verbose and run higher statistics
+/tracking/verbose 0
+/LC/beam/energy 0.5 MeV
+/run/beamOn 5000
+
+# Try higher energy
+/LC/beam/energy 10 MeV
+/run/beamOn 5000
+
+# Print summary
+/run/printProgress 100

@@ -1,0 +1,42 @@
+# production_run.mac - High-statistics production run
+#
+# This macro is designed for overnight/long-duration runs
+# with high statistics for precise measurements
+
+# Disable visualization and minimize output for best performance
+/vis/disable
+/control/verbose 0
+/run/verbose 1
+/event/verbose 0
+/tracking/verbose 0
+
+# Print progress infrequently to reduce I/O overhead
+/run/printProgress 10000
+
+# Configure detector with standard settings
+/LC/detector/bias 300 volt
+/LC/beam/glassFilter false
+
+# Initialize
+/run/initialize
+
+# Set seed for reproducibility
+/random/setSeeds 12345 67890
+
+# Configure main production run parameters
+/LC/beam/particle proton
+/LC/beam/energy 200 MeV
+
+# Run 1 million events
+/run/beamOn 1000000
+
+# Save random engine status for potential continuation
+/random/saveEachEventStatus true
+
+# Print completion message and timestamp
+/control/shell echo "====================================="
+/control/shell echo "Production run complete"
+/control/shell echo "1,000,000 events - 200 MeV protons"
+/control/shell echo "Output: LC_proton_200MeV.root"
+/control/shell echo "====================================="
+/control/shell date

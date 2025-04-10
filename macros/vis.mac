@@ -1,0 +1,55 @@
+# vis.mac - Visualization settings for 5CB Liquid Crystal Detector
+#
+# This macro sets up visualization and displays detector geometry
+# with a few particle tracks for visual inspection
+
+# Use OpenGL driver
+/vis/open OGL 600x600-0+0
+
+# Draw coordinate axes
+/vis/scene/add/axes 0 0 0 10 cm
+
+# Set up view parameters 
+/vis/viewer/set/viewpointThetaPhi 30 30
+/vis/viewer/zoom 1.5
+/vis/viewer/set/style surface
+
+# Draw detector geometry
+/vis/drawVolume
+/vis/viewer/flush
+
+# Add trajectories
+/vis/scene/add/trajectories smooth
+/vis/modeling/trajectories/create/drawByCharge
+/vis/modeling/trajectories/drawByCharge-0/default/setDrawStepPts true
+/vis/modeling/trajectories/drawByCharge-0/default/setStepPtsSize 2
+
+# Color coding
+/vis/modeling/trajectories/drawByCharge-0/set -1 blue   # Negative particles
+/vis/modeling/trajectories/drawByCharge-0/set 0 green   # Neutral particles
+/vis/modeling/trajectories/drawByCharge-0/set 1 red     # Positive particles
+
+# Enable tracking of secondary particles
+/vis/filtering/trajectories/create/attributeFilter
+/vis/filtering/trajectories/attributeFilter-0/setAttribute IMag
+/vis/filtering/trajectories/attributeFilter-0/addInterval 0.0 10.0 MeV
+
+# Set beam parameters
+/LC/beam/particle proton
+/LC/beam/energy 100 MeV
+
+# Initialize run
+/run/initialize
+/vis/viewer/set/autoRefresh true
+
+# Show detector bias info on visualization
+/vis/scene/add/text 0 -5 5 cm 20 0 0 Detector Bias: 300V
+/vis/scene/add/text 0 -5 3 cm 20 0 0 Proton 100 MeV
+
+# Run a few events for visualization
+/run/beamOn 5
+
+# Add more views
+/vis/viewer/set/viewpointThetaPhi 90 0
+/vis/viewer/set/lightsMove with-camera
+/vis/viewer/flush

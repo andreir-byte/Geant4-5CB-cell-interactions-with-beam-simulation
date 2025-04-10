@@ -1,0 +1,99 @@
+# angular_dependence.mac - Study of detector response vs. incidence angle
+#
+# This macro tests the detector's response to particles arriving from
+# different incidence angles, important for directional sensitivity analysis
+
+# Load gun direction command support
+/control/execute gun_commands.mac
+
+# Initialize run
+/run/initialize
+
+# Set verbose levels
+/control/verbose 1
+/run/verbose 1
+/event/verbose 0
+/tracking/verbose 0
+
+# Configure detector
+/LC/detector/bias 300 volt
+/LC/beam/glassFilter false
+
+# Configure beam - 100 MeV protons
+/LC/beam/particle proton
+/LC/beam/energy 100 MeV
+
+# Define custom commands to set beam direction
+/control/alias theta {theta}
+/control/alias phi {phi}
+/control/alias events 2000
+
+# Normal incidence (0 degrees)
+/control/getEnv theta 0
+/control/getEnv phi 0
+/gun/direction [sin($theta*deg)*cos($phi*deg)] [sin($theta*deg)*sin($phi*deg)] [cos($theta*deg)]
+/control/shell echo "Running protons at normal incidence (theta=0°)"
+/run/beamOn {events}
+
+# 15 degrees incidence
+/control/getEnv theta 15
+/control/getEnv phi 0
+/gun/direction [sin($theta*deg)*cos($phi*deg)] [sin($theta*deg)*sin($phi*deg)] [cos($theta*deg)]
+/control/shell echo "Running protons at 15° incidence angle"
+/run/beamOn {events}
+
+# 30 degrees incidence
+/control/getEnv theta 30
+/control/getEnv phi 0
+/gun/direction [sin($theta*deg)*cos($phi*deg)] [sin($theta*deg)*sin($phi*deg)] [cos($theta*deg)]
+/control/shell echo "Running protons at 30° incidence angle"
+/run/beamOn {events}
+
+# 45 degrees incidence
+/control/getEnv theta 45
+/control/getEnv phi 0
+/gun/direction [sin($theta*deg)*cos($phi*deg)] [sin($theta*deg)*sin($phi*deg)] [cos($theta*deg)]
+/control/shell echo "Running protons at 45° incidence angle"
+/run/beamOn {events}
+
+# 60 degrees incidence
+/control/getEnv theta 60
+/control/getEnv phi 0
+/gun/direction [sin($theta*deg)*cos($phi*deg)] [sin($theta*deg)*sin($phi*deg)] [cos($theta*deg)]
+/control/shell echo "Running protons at 60° incidence angle"
+/run/beamOn {events}
+
+# Extreme grazing incidence (75 degrees)
+/control/getEnv theta 75
+/control/getEnv phi 0
+/gun/direction [sin($theta*deg)*cos($phi*deg)] [sin($theta*deg)*sin($phi*deg)] [cos($theta*deg)]
+/control/shell echo "Running protons at grazing incidence (75°)"
+/run/beamOn {events}
+
+# Test rotation around detector (phi angle, at 45 degrees theta)
+/control/getEnv theta 45
+/control/getEnv phi 0
+/gun/direction [sin($theta*deg)*cos($phi*deg)] [sin($theta*deg)*sin($phi*deg)] [cos($theta*deg)]
+/control/shell echo "Running protons at phi=0°, theta=45°"
+/run/beamOn {events}
+
+/control/getEnv theta 45
+/control/getEnv phi 90
+/gun/direction [sin($theta*deg)*cos($phi*deg)] [sin($theta*deg)*sin($phi*deg)] [cos($theta*deg)]
+/control/shell echo "Running protons at phi=90°, theta=45°"
+/run/beamOn {events}
+
+/control/getEnv theta 45
+/control/getEnv phi 180
+/gun/direction [sin($theta*deg)*cos($phi*deg)] [sin($theta*deg)*sin($phi*deg)] [cos($theta*deg)]
+/control/shell echo "Running protons at phi=180°, theta=45°"
+/run/beamOn {events}
+
+/control/getEnv theta 45
+/control/getEnv phi 270
+/gun/direction [sin($theta*deg)*cos($phi*deg)] [sin($theta*deg)*sin($phi*deg)] [cos($theta*deg)]
+/control/shell echo "Running protons at phi=270°, theta=45°"
+/run/beamOn {events}
+
+# Print summary
+/run/printProgress 1000

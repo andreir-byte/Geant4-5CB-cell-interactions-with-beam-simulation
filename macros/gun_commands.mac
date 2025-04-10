@@ -1,0 +1,13 @@
+# gun_commands.mac - Add support for /gun/direction commands
+
+# Create messenger for custom gun direction command
+/control/createCommand gun/direction
+/control/addCommand gun/direction LCPrimaryGeneratorAction SetBeamDirection 3 Dimensionless Dimensionless true true true
+
+# Define a helper macro for setting vector direction
+/control/alias x {x}
+/control/alias y {y}
+/control/alias z {z}
+
+/control/createCommand gun/setXYZ
+/control/addCommand gun/setXYZ SetDirectionXYZ

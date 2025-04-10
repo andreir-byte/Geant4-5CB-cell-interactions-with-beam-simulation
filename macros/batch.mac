@@ -1,0 +1,39 @@
+# batch.mac - High-performance batch mode for 5CB Liquid Crystal Detector
+#
+# This macro is optimized for running large numbers of events
+# with no visualization for maximum performance
+
+# Disable visualization to save memory and CPU
+/vis/disable
+
+# Set low verbose levels for better performance
+/control/verbose 0
+/run/verbose 1
+/event/verbose 0
+/tracking/verbose 0
+
+# Print event counts every 1000 events
+/run/printProgress 1000
+
+# Configure detector
+/LC/detector/bias 300 volt
+
+# Configure beam
+/LC/beam/particle proton
+/LC/beam/energy 500 MeV
+/LC/beam/glassFilter false
+
+# Initialize and run 
+/run/initialize
+/run/beamOn 100000
+
+# Output simulation settings to terminal
+/control/shell echo "========================================"
+/control/shell echo "Simulation complete - 100000 events"
+/control/shell echo "Particle: proton at 500 MeV"
+/control/shell echo "Bias voltage: 300 V"
+/control/shell echo "Glass filter: disabled"
+/control/shell echo "========================================"
+
+# Exit after completion (for use in scripts)
+/control/shell exit
