@@ -74,7 +74,7 @@ source ~/.bashrc
 
 ```bash
 # Clone the repository (if using git) or extract from archive
-git clone https://github.com/yourusername/LCDetector.git
+git clone https://github.com/andreir-byte/Geant4-5CB-cell-interactions-with-beam-simulation/tree/main
 # Or extract from archive: tar -xzf LCDetector.tar.gz
 
 # Navigate to project directory
